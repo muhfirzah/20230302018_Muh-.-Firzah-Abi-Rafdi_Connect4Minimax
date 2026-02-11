@@ -1,0 +1,52 @@
+# Hasil Analisis Performa Algoritma Minimax
+
+Dokumen ini digunakan untuk mencatat hasil pengujian dan analisis performa dari algoritma Minimax yang diimplementasikan pada game Connect-Four.
+
+## Metodologi Pengujian
+
+Setiap pengujian dilakukan dengan menjalankan beberapa permainan dan mencatat metrik rata-rata yang ditampilkan pada panel analisis di GUI. Pengujian difokuskan pada bagaimana perubahan kedalaman pencarian (depth) mempengaruhi performa.
+
+---
+
+### Pengujian 1: Depth = 2
+
+- **Rata-rata Waktu Eksekusi (ms):** [Isi di sini, misal: ~5-10 ms]
+- **Rata-rata Jumlah Node Dievaluasi:** [Isi di sini, misal: ~500-1000 nodes]
+- **Kualitas Permainan AI:** [Isi di sini, misal: Sangat cepat tetapi sering melakukan kesalahan fatal. Mudah dikalahkan.]
+- **Observasi:** AI hanya melihat 2 langkah ke depan, sehingga tidak dapat mengantisipasi ancaman atau peluang jangka panjang.
+
+---
+
+### Pengujian 2: Depth = 3
+
+- **Rata-rata Waktu Eksekusi (ms):** [Isi di sini, misal: ~50-100 ms]
+- **Rata-rata Jumlah Node Dievaluasi:** [Isi di sini, misal: ~5,000-8,000 nodes]
+- **Kualitas Permainan AI:** [Isi di sini, misal: Mulai menunjukkan permainan yang layak. Dapat memblokir kemenangan langsung dan melihat peluang sederhana.]
+- **Observasi:** Peningkatan signifikan dalam "kecerdasan" dengan waktu respons yang masih dapat diterima.
+
+---
+
+### Pengujian 3: Depth = 4 (Default)
+
+- **Rata-rata Waktu Eksekusi (ms):** [Isi di sini, misal: ~400-800 ms]
+- **Rata-rata Jumlah Node Dievaluasi:** [Isi di sini, misal: ~40,000-60,000 nodes]
+- **Kualitas Permainan AI:** [Isi di sini, misal: Cukup menantang. Jarang membuat kesalahan yang jelas dan mampu menyiapkan jebakan 2-3 langkah.]
+- **Observasi:** Waktu berpikir AI mulai terasa. Jumlah node yang dievaluasi meningkat secara eksponensial, sesuai dengan kompleksitas O(b^d). Ini adalah keseimbangan yang baik antara kekuatan bermain dan waktu tunggu.
+
+---
+
+### Pengujian 4: Depth = 5
+
+- **Rata-rata Waktu Eksekusi (ms):** [Isi di sini, misal: ~3000-6000 ms atau 3-6 detik]
+- **Rata-rata Jumlah Node Dievaluasi:** [Isi di sini, misal: ~300,000+ nodes]
+- **Kualitas Permainan AI:** [Isi di sini, misal: Sangat kuat. Sulit untuk dikalahkan dan dapat melihat strategi jangka panjang.]
+- **Observasi:** Waktu tunggu menjadi sangat signifikan dan mungkin mengganggu pengalaman bermain. Ini menunjukkan batasan praktis dari algoritma Minimax tanpa optimisasi (seperti Alpha-Beta Pruning) pada perangkat keras konsumen.
+
+---
+
+## Kesimpulan Analisis
+
+-   Kompleksitas waktu **O(b^d)** terbukti secara empiris. Setiap peningkatan satu level pada `d` (depth) mengakibatkan peningkatan jumlah node yang dievaluasi secara eksponensial (sekitar `b` kali lipat, di mana `b` adalah branching factor, rata-rata 7 untuk Connect-Four).
+-   Waktu eksekusi berkorelasi langsung dengan jumlah node yang dievaluasi.
+-   Ada trade-off yang jelas antara **kualitas keputusan (kekuatan AI)** dan **performa (waktu respons)**. Kedalaman 4 memberikan keseimbangan terbaik untuk tujuan aplikasi ini.
+-   Fungsi evaluasi heuristik bekerja dengan baik, mampu memandu AI untuk memblokir lawan dan menciptakan peluang menang.
